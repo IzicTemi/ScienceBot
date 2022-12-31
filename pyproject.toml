@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "openfabric-test"
+version = "1.1"
+description = "cognitive-assistant"
+authors = ["Andrei"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openfabric-pysdk = "0.1.11"
+flask = "2.0.1"
+werkzeug = "2.0.1"
+transformers = "^4.25.1"
+spacy = "^3.4.4"
+pymediawiki = "^0.7.2"
+datasets = "^2.8.0"
+pandas = "^1.5.2"
+torch = "^1.12.1"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
