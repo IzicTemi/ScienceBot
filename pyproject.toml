@@ -15,7 +15,7 @@ pymediawiki = "^0.7.2"
 datasets = "^2.8.0"
 pandas = "^1.5.2"
 torch = "^1.12.1"
-
+scikit-learn = "^1.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
