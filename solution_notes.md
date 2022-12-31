@@ -16,6 +16,8 @@ When a question is asked, the bot computes the query vectors and then retrieves 
 
 A pretrained model: `DistilBERT` finetuned on the [SQuAD](https://rajpurkar.github.io/SQuAD-explorer/) dataset for question answering is used to extract answers from the context. This answer is then returned to the user.
 
+View approach in [modelling.py](modelling.py)
+
 ## Steps
 1. Create virtual environment and install dependencies
 ```
