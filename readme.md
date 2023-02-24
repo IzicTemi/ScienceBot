@@ -1,36 +1,48 @@
-# AI Junior Developer (Intern) Test 
-Welcome! and thank you for applying! 
+# ScienceBot
+An 💬NLP chatbot **answering questions about science**.
 
-> [View my approach and steps in solution_notes.md.](solution_notes.md)
-
-## Requirement
-The current project has the blueprint structure of an AI App. 
-
-Your mission is to implement an 💬NLP chatbot **answering questions about science**. 
-
-You will add your logic to the `main.py` file inside the `execute` function. 
-```python
-def execute(request: SimpleText, ray: OpenfabricExecutionRay) -> SimpleText:
-    output = []
-    for text in request.text:        
-        response = '' # <<< --Your magic goes here
-        output.append(response)
-
-    return SimpleText(dict(text=output))
+## Pre-requisites
+- Install poetry
 ```
-## Constraints and restrictions
-You are free to use any package or library you see feet as long as you follow these rules:
-* 👎 You can't call any external service (e.g. chatGPT) 
-* 👎 You can't copy and paste from other peoples work 
+pip install poetry
+```
 
-## Run
-The application can be executed in two different ways:
-* locally by running the `start.sh` 
-* on in a docker container using `Dockerfile` 
+## Approach
+When a question is asked, TF-IDF (“Term Frequency — Inverse Document Frequency”) is used to search a database of science facts and score the documents relating to the question. It is a technique to calculate the weight of each word in the question i.e. the importance of the word in the document and corpus. This algorithm is mostly using for the retrieval of information and text mining.
 
-## Submission
-Your solution must be uploaded on GitHub, and submit us the link in **max 1 week** after receiving the task.
+The [SciQ Dataset](https://allenai.org/data/sciq) is used as the document store (database). It contains 13,679 crowdsourced science exam questions about Physics, Chemistry and Biology, among others. 
 
-## Note
-Keep in mind that this is the project that will be used to evaluate your skills.
-So we do expect you to make sure that the app is fully functional and doesn't have any obvious missing pieces.
+When a question is asked, the bot computes the query vectors and then retrieves relevant context from document store if similarity score > threshold of 0.5. If score not up to threshold i.e., no relevant context found, the summary from the top Wikipedia page relating to the question is used as context.
+
+A pretrained model: `DistilBERT` finetuned on the [SQuAD](https://rajpurkar.github.io/SQuAD-explorer/) dataset for question answering is used to extract answers from the context. This answer is then returned to the user.
+
+View approach in [modelling.py](modelling.py)
+
+## Steps
+1. Create virtual environment and install dependencies
+```
+poetry install
+```
+
+2. Activate virtual environment
+```
+poetry shell
+```
+
+3. Download Spacy English language model.  
+```
+python -m spacy download en_core_web_sm
+```
+
+4. Optional - Run modelling.py to build document store. I've saved one to the [artifacts](artifacts/) directory.
+```
+python modelling.py
+```
+
+5. Start ScienceBot
+```
+python ignite.py
+```
+The bot should be running on port 5000
+
+6. Test ScienceBot by sending a `POST` request to http://localhost:5000/app
